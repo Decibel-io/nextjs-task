@@ -1,4 +1,4 @@
-# Frontend Tasks for Freelancers (Paid Task)
+# Frontend Task for Frontend Position (Paid)
 
 This test is a part of our hiring process for the Frontend Engineer. It should take you between 5-7 hours, depending on your experience, to implement the minimal version. But we thought about a few bonuses, so feel free to spend some time on them if you want.
 
