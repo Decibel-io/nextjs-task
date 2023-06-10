@@ -8,7 +8,7 @@ First time freelancers looking to build their profiles are encouraged to apply. 
 
 The application needs be built on Next.js using styled components, TypeScript.
 
-For the purpose of this test, you can use Bootstrap, Material or Ant Design for the base design library. Copy Styling of different components such as buttons, lists, fields etc. from the assets in the `/design-files` folder. 
+For the purpose of this test, you can use Bootstrap, Material or Ant Design for the base design library. Copy Styling of different components such as buttons, lists, fields etc. from the [Vercel's Design System](https://vercel.com/design/introduction) . 
 
 This application must:
 - Display a paginated list of calls that you’ll retrieve from the API.
