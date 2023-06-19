@@ -10,10 +10,9 @@ If you're not able to submit it in 48 hours and your task doesn't do the require
 
 The application needs be built on Next.js using styled components, TypeScript.
 
-For the purpose of this test, you can use Bootstrap, Material or Ant Design for the base design library. Sorry mate but you can't use Tailwind CSS. Copy Styling of different components such as buttons, lists, fields etc. from the [Vercel's Design System](https://vercel.com/design/introduction) , if you've a better and faster way to do this then we'll give you additional 25% bonus over the total amount. At the end of this task, your design should look something like this -
+For the purpose of this test, you can use Bootstrap, Material or Ant Design for the base design library. Sorry mate but you can't use Tailwind CSS. Copy Styling of different components such as buttons, lists, fields etc. from the Adobe XD file uploaded with this repository, if you've a better and faster way to do this then we'll give you additional 25% bonus over the total amount. At the end of this task, your design should look something like this -
 
- <img width="1452" alt="Screenshot 2023-06-11 at 3 09 35 AM" src="https://github.com/Decibel-io/nextjs-task/assets/93420471/8e9bf88e-8ea9-4da1-bd0c-9c1b394eca6c"> 
-
+![Calls List](https://github.com/Decibel-io/nextjs-task/assets/93420471/384725fb-2591-4a8b-9df9-d92ab64882a6)
 
 This application must:
 - Display a paginated list of calls that you’ll retrieve from the API.
