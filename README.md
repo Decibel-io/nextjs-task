@@ -4,7 +4,7 @@ This test is a part of our hiring process for the Frontend Engineer. It should t
 
 First time freelancers looking to build their profiles are encouraged to apply. You need to submit this within 48 hours of receiving this, and you'll be paid your hourly rate x 6 hours (average time for this task).
 
-If you're not able to submit it in 48 hours and your task doesn't do the required functionality then we'll cancel the contract.
+If you're not able to submit it in 48 hours and your task doesn't do the required functionality then we'll cancel the contract. First of all, fork this repo, start coding and create a PR once you're done with your work.
 
 ## Exercise
 
