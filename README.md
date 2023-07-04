@@ -12,7 +12,7 @@ The application needs be built on Next.js using styled components, TypeScript.
 
 For the purpose of this test, you can use Bootstrap, Material or Ant Design for the base design library. Sorry mate but you can't use Tailwind CSS. Copy Styling of different components such as buttons, lists, fields etc. from the Adobe XD file uploaded with this repository, if you've a better and faster way to do this then we'll give you additional 25% bonus over the total amount. At the end of this task, your design should look something like this -
 
-![Calls List](https://github.com/Decibel-io/nextjs-task/assets/93420471/384725fb-2591-4a8b-9df9-d92ab64882a6)
+![246880735-384725fb-2591-4a8b-9df9-d92ab64882a6](https://github.com/Decibel-io/nextjs-task/assets/93420471/2313f599-befd-4ca1-8c91-8b1ce6386dd3)
 
 This application must:
 - Display a paginated list of calls that you’ll retrieve from the API.
