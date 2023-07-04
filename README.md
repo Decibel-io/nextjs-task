@@ -98,12 +98,14 @@ type PaginatedCalls {
 
 ```
 call(id: Float!): Call
+
 ```
 
 `me` returns the currently authenticated user.
 
 ```
 me: UserType!
+
 ```
 
 ```
@@ -135,7 +137,7 @@ interface AuthResponseType {
 
 Once you are correctly authenticated you need to pass the Authorization header for all the next calls to the GraphQL API.
 
-```JSON
+```
 {
   "Authorization": "Bearer <YOUR_ACCESS_TOKEN>"
 }
