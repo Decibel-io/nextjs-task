@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "../src/Link";
 import Table from "../components/Table";
+import CallsList from "../components/CallList";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
           Material UI - Next.js with TypeScript
         </Typography>
         <Table />
+        <CallsList />
       </Box>
     </Container>
   );
