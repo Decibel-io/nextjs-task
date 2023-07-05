@@ -4,26 +4,17 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "../src/Link";
 import Table from "../components/Table";
-import CallsList from "../components/CallList";
+import Header from "../components/Header";
 
 export default function Home() {
   return (
-    <Container maxWidth="lg">
-      <Box
-        sx={{
-          my: 4,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h4" component="h1" gutterBottom>
+    <Container maxWidth="xl">
+      <Header />
+        <Table />
+        <Typography variant="h6" component="h1" gutterBottom textAlign={'end'}>
           Material UI - Next.js with TypeScript
         </Typography>
-        <Table />
-        <CallsList />
-      </Box>
+      
     </Container>
   );
 }
