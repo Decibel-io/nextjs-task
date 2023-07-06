@@ -28,14 +28,6 @@ const login = async (username: string, password: string): Promise<string> => {
   const username: string = 'devxpert';
   const password: string = 'devxpert';
   
-//  setInterval(async () => {
-//     try {
-//       const access_Token: string = await login(username, password);
-//       console.log('Access Token:', access_Token);
-//     } catch (error) {
-//       console.error('Login error:', error);
-//     }
-//   }, 5*1* 1000); // 9 minutes in milliseconds
 
  
 

@@ -157,12 +157,9 @@ export default function Table() {
       }
       return obj;
     });
-
-    console.log(filteredArray);
     setFilterdCalls(filteredArray);
   }, [status]);
   const handleRowClick = (row: Call) => {
-    console.log("wertyui", row);
     setRow(row);
     setOpenCallDetails(true);
   };
@@ -170,7 +167,6 @@ export default function Table() {
   const handleClose = () => {
     setOpenCallDetails(false);
   };
-  console.log(calls);
 
   return (
     <>
@@ -217,6 +213,7 @@ export default function Table() {
         open={openCallDetails}
         onClose={handleClose}
         row={row}
+        token={accessToken}
       />
     </>
   );

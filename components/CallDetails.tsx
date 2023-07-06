@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Call } from "../interfaces/call";
 import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -22,18 +23,33 @@ export default function BasicModal({
   open,
   onClose,
   row,
+  token,
 }: {
   open: boolean;
   onClose: any;
   row: Call | null;
+  token: string;
 }) {
-  //   const [open, setOpen] = React.useState(true);
-  //   const handleOpen = () => setOpen(true);
-  //   const handleClose = () => setOpen(false);
+  const [archive, setArchive] = useState<boolean>(row?.is_archived as boolean);
+  const handleArchive = async () => {
+    const res = await fetch(
+      `https://frontend-test-api.aircall.io/calls/${row?.id}/archive`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include the bearer token in the header
+        },
+      }
+    );
+    if (res.ok) {
+      setArchive(!archive);
+    }
+  };
 
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+      {/*  */}
       <Modal
         open={open}
         // onClose={onClose}
@@ -76,9 +92,15 @@ export default function BasicModal({
             </Box>
             <Box sx={{ display: "flex", gap: 9 }}>
               <Box> Status: </Box>
-              {row?.is_archived as string}
+              {/* {row?.is_archived as string} */}
+              {archive ? "Archived" : "Unarchived"}
             </Box>
           </Typography>
+          <Box sx={{ mt: 2 }}>
+            <Button variant="contained" size="large" onClick={handleArchive}>
+              {archive ? "Unarchive" : "Archive"}
+            </Button>
+          </Box>
         </Box>
       </Modal>
     </div>
