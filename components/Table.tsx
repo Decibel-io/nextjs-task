@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
+import CallDetailsModal from "./CallDetails";
 
 function convertSecondsToMinutes(seconds: any) {
   const minutes = Math.floor(seconds / 60);
@@ -22,6 +23,8 @@ export default function Table() {
   const [accessToken, setAccessToken] = useState(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZXZ4cGVydCIsInVzZXJuYW1lIjoiZGV2eHBlcnQiLCJpYXQiOjE2ODg1NzI5MDIsImV4cCI6MTY4ODU3MzUwMn0.NRS1JwOn7pKOJVSqbOwH8ExT8kS90DurHtLXTcvvbH8"
   );
+  const [openCallDetails, setOpenCallDetails] = useState(false);
+  const [row, setRow] = useState<Call | null>(null);
   const [status, setStatus] = React.useState("");
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [calls, setCalls] = useState<Call[]>([]);
@@ -158,8 +161,14 @@ export default function Table() {
     console.log(filteredArray);
     setFilterdCalls(filteredArray);
   }, [status]);
-  const handleRowClick = (row) => {
-    console.log(row);
+  const handleRowClick = (row: Call) => {
+    console.log("wertyui", row);
+    setRow(row);
+    setOpenCallDetails(true);
+  };
+
+  const handleClose = () => {
+    setOpenCallDetails(false);
   };
 
   return (
@@ -192,26 +201,22 @@ export default function Table() {
         <MaterialReactTable
           columns={columns}
           data={filteredCalls}
-          enableRowSelection //enable some features
-          enableMultiRowSelection={false}
           muiTableBodyRowProps={({ row }) => ({
-            onClick: handleRowClick(row.original),
+            onClick: () => handleRowClick(row.original),
             sx: { cursor: "pointer" },
           })}
-          enableColumnOrdering={false}
-          enableGlobalFilter={true} //turn off a feature
           enableColumnActions={false}
-          enableColumnFilters={false}
           state={{
             isLoading: isLoadingData,
           }}
-          // enablePagination={false}
-          enableSorting={false}
-          // enableBottomToolbar={false}
           enableTopToolbar={false}
-          // muiTableBodyRowProps={{ hover: false }}
         />
       )}
+      <CallDetailsModal
+        open={openCallDetails}
+        onClose={handleClose}
+        row={row}
+      />
     </>
   );
 }
