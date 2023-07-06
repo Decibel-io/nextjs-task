@@ -11,7 +11,7 @@ export default function Home() {
     <Container maxWidth="xl">
       <Header />
         <Table />
-        <Typography variant="h6" component="h1" gutterBottom textAlign={'end'}>
+        <Typography variant="h6" component="h1" gutterBottom textAlign='end'>
           Material UI - Next.js with TypeScript
         </Typography>
       

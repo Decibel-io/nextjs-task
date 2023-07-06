@@ -3,44 +3,61 @@ import { MaterialReactTable } from "material-react-table";
 import { MRT_ColumnDef } from "material-react-table"; // If using TypeScript (optional, but recommended)
 import { Call } from "../interfaces/call";
 // import { accessToken } from "../interfaces/newToken";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+
+function convertSecondsToMinutes(seconds: any) {
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const remainingSeconds = seconds % 60;
+  return `${hours} h ${
+    minutes % hours
+  } m ${remainingSeconds} s \n(${seconds} s)`;
+}
 
 export default function Table() {
   const [accessToken, setAccessToken] = useState(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZXZ4cGVydCIsInVzZXJuYW1lIjoiZGV2eHBlcnQiLCJpYXQiOjE2ODg1NzI5MDIsImV4cCI6MTY4ODU3MzUwMn0.NRS1JwOn7pKOJVSqbOwH8ExT8kS90DurHtLXTcvvbH8"
   );
-
+  const [status, setStatus] = React.useState("");
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const [calls, setCalls] = useState<Call[]>([]);
-  useEffect(() => {
-    setInterval(async () => {
-      try {
-        const response = await fetch(
-          "https://frontend-test-api.aircall.io/auth/login",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username: "abc", password: "abc" }),
-          }
-        );
+  const [filteredCalls, setFilterdCalls] = useState<Call[]>([]);
 
-        if (!response.ok) {
-          throw new Error("Login failed");
+  const login = async () => {
+    try {
+      const response = await fetch(
+        "https://frontend-test-api.aircall.io/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: "abc", password: "abc" }),
         }
+      );
 
-        const data = await response.json();
-        const token: string = data.access_token;
-        setAccessToken(token);
-      } catch (error) {
-        console.error("Login failed:", error);
-        throw error;
+      if (!response.ok) {
+        throw new Error("Login failed");
       }
-    }, 9 * 60 * 1000);
+
+      const data = await response.json();
+      const token: string = data.access_token;
+      setAccessToken(token);
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw error;
+    }
+  };
+  useEffect(() => {
     const fetchData = async () => {
       try {
+        await login();
         const response = await fetch(
-          "https://frontend-test-api.aircall.io/calls?offset=0&limit=25",
+          `https://frontend-test-api.aircall.io/calls?0=0&limit=25`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -65,6 +82,7 @@ export default function Table() {
               is_archived: "Unarchived",
             };
           }
+          obj.duration = convertSecondsToMinutes(obj.duration);
           let utcDate: Date = new Date(obj.created_at);
           let localDateString: String = utcDate.toLocaleDateString();
 
@@ -72,6 +90,8 @@ export default function Table() {
           return obj;
         });
         setCalls(temp);
+        setFilterdCalls(temp);
+        setIsLoadingData(false);
       } catch (error) {
         console.error(error);
       }
@@ -124,27 +144,72 @@ export default function Table() {
     ],
     []
   );
-  console.log("fghjkl", calls);
+  const handleChange = (event: SelectChangeEvent) => {
+    setStatus(event.target.value as string);
+  };
+  useEffect(() => {
+    const filteredArray = calls.filter((obj) => {
+      if (status !== "all") {
+        return obj.is_archived === status;
+      }
+      return obj;
+    });
+
+    console.log(filteredArray);
+    setFilterdCalls(filteredArray);
+  }, [status]);
+  const handleRowClick = (row) => {
+    console.log(row);
+  };
 
   return (
     <>
       <Typography variant="h4" component="h1" gutterBottom>
         Table of all calls
       </Typography>
-      {calls && (
+      <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+        <Box sx={{ pt: 2 }}> Filter By: </Box>
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-standard-label">
+              Status
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={status}
+              onChange={handleChange}
+              label="Status"
+            >
+              <MenuItem value="all">All</MenuItem>
+              <MenuItem value="Archived">Archived</MenuItem>
+              <MenuItem value="Unarchived">Unarchived</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>{" "}
+      </Box>
+      {filteredCalls && (
         <MaterialReactTable
           columns={columns}
-          data={calls}
-          enableRowSelection={false} //enable some features
+          data={filteredCalls}
+          enableRowSelection //enable some features
+          enableMultiRowSelection={false}
+          muiTableBodyRowProps={({ row }) => ({
+            onClick: handleRowClick(row.original),
+            sx: { cursor: "pointer" },
+          })}
           enableColumnOrdering={false}
-          enableGlobalFilter={false} //turn off a feature
+          enableGlobalFilter={true} //turn off a feature
           enableColumnActions={false}
           enableColumnFilters={false}
+          state={{
+            isLoading: isLoadingData,
+          }}
           // enablePagination={false}
           enableSorting={false}
           // enableBottomToolbar={false}
           enableTopToolbar={false}
-          muiTableBodyRowProps={{ hover: false }}
+          // muiTableBodyRowProps={{ hover: false }}
         />
       )}
     </>
