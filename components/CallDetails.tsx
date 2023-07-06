@@ -41,26 +41,32 @@ export default function BasicModal({
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            <Box sx={{ display: "flex", gap: 7 }}>
+            <Box sx={{ display: "flex", gap: 9 }}>
               <Box> Call ID:</Box> {row?.id}
             </Box>
             <hr />
-            <Box sx={{ display: "flex", gap: 4 }}>
+            <Box sx={{ display: "flex", gap: 6 }}>
               <Box> Call Type:</Box> {row?.call_type}
             </Box>
             <Box sx={{ display: "flex", gap: 4 }}>
+              <Box> Created At:</Box> {row?.created_at}
+            </Box>
+            <Box sx={{ display: "flex", gap: 6 }}>
               <Box> Duration :</Box> {row?.duration}
             </Box>
-            <Box sx={{ display: "flex", gap: 4 }}>
+            <Box sx={{ display: "flex", gap: 6 }}>
               <Box> Direction: </Box> {row?.direction}
             </Box>
-            <Box sx={{ display: "flex", gap: 8 }}>
-              <Box> From: </Box> {row?.from}
-            </Box>
-            <Box sx={{ display: "flex", gap: 11 }}>
-              <Box> To:</Box> {row?.to}
+            <Box sx={{ display: "flex", gap: 4 }}>
+              <Box> Is Archived: </Box> {row?.is_archived}
             </Box>
             <Box sx={{ display: "flex", gap: 10 }}>
+              <Box> From: </Box> {row?.from}
+            </Box>
+            <Box sx={{ display: "flex", gap: 13 }}>
+              <Box> To:</Box> {row?.to}
+            </Box>
+            <Box sx={{ display: "flex", gap: 12 }}>
               <Box> Via: </Box>
               {row?.via}
             </Box>

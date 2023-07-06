@@ -170,6 +170,7 @@ export default function Table() {
   const handleClose = () => {
     setOpenCallDetails(false);
   };
+  console.log(calls);
 
   return (
     <>
