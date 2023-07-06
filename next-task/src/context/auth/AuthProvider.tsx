@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
+import Api from '@/api/Api';
 import { useLogin } from '@/api/useLogin';
 import { useRefreshToken } from '@/api/useRefreshToken';
 import { AUTH_CREDENTIALS } from '@/constants';
 import { useInterval } from '@/hooks/useInterval';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { alertAnError, getMilliseconds } from '@/utils';
 
 import React, { PropsWithChildren, useEffect } from 'react';
@@ -12,18 +12,21 @@ import { AuthContextContainer } from './AuthContext';
 
 const tenMinutes = getMilliseconds();
 
-function AuthProvider({ children }: PropsWithChildren) {
+interface IAuth extends PropsWithChildren {
+  setToken: (token: string) => void;
+  token: string;
+}
+
+function AuthProvider({ children, setToken, token }: IAuth) {
   const { mutate: Login } = useLogin();
   const { mutate: refreshToken } = useRefreshToken();
 
-  const { setItem, item } = useLocalStorage('AUTH_TOKEN');
-
   const handleLogin = () => {
-    if (!item) {
+    if (!token.length) {
       Login(AUTH_CREDENTIALS, {
         onSuccess: (data) => {
-          if (setItem && !!data) {
-            setItem(data.access_token);
+          if (!!data) {
+            setToken(data.access_token);
           }
         },
         onError: (err) => alertAnError(err),
@@ -33,15 +36,15 @@ function AuthProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     handleLogin();
-  }, [Login]);
+  }, [Login, token]);
 
   useInterval(() => {
     refreshToken(
       {},
       {
         onSuccess: (data) => {
-          if (setItem && !!data) {
-            setItem(data.access_token);
+          if (!!data) {
+            setToken(data.access_token);
           }
         },
         onError: (err) => {
@@ -51,7 +54,9 @@ function AuthProvider({ children }: PropsWithChildren) {
     );
   }, tenMinutes);
 
-  return <AuthContextContainer value={{}}>{children}</AuthContextContainer>;
+  return (
+    <AuthContextContainer value={{ token }}>{children}</AuthContextContainer>
+  );
 }
 
 export default AuthProvider;

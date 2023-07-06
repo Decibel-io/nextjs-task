@@ -131,11 +131,17 @@ const CallModalBody = ({
 }: ICall & { onClose: (undefined: undefined) => void }) => {
   const { mutate: addNote, isLoading } = useAddNote();
   const [note, setNote] = useState(
-    callData.notes.reduce((acc, item) => (acc += item.content), '')
+    callData.notes[callData.notes.length - 1]?.content || ''
   );
 
   const onSave = () => {
-    addNote({ id, content: note }, { onError: (err) => alertAnError(err) });
+    addNote(
+      { id, content: note },
+      {
+        onError: (err) => alertAnError(err),
+        onSuccess: () => onClose(undefined),
+      }
+    );
   };
 
   return (
