@@ -64,9 +64,6 @@ export default function BasicModal({
             <Box sx={{ display: "flex", gap: 6 }}>
               <Box> Direction: </Box> {row?.direction}
             </Box>
-            <Box sx={{ display: "flex", gap: 4 }}>
-              <Box> Is Archived: </Box> {row?.is_archived}
-            </Box>
             <Box sx={{ display: "flex", gap: 10 }}>
               <Box> From: </Box> {row?.from}
             </Box>
