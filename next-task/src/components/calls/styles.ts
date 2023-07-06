@@ -29,7 +29,16 @@ export const styles = {
     alignItems: 'center',
     p: 2,
   },
-  rowContainer: { display: 'flex', gap: 3, alignItems: 'center', px: 2 },
+  rowContainer: {
+    display: 'flex',
+    gap: 3,
+    alignItems: 'center',
+    px: 2,
+    marginY: 1,
+  },
+  rowKey: {
+    fontSize: '16px',
+  },
 } satisfies IStyles;
 
 export const getArchiveStyles = (isArchive: boolean): Style => {

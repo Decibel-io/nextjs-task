@@ -17,7 +17,7 @@ function ApiProvider({
       instance.initialize(token);
     }
     return instance;
-  }, []);
+  }, [initialToken, item]);
   return <ApiContextProvider value={api}>{children} </ApiContextProvider>;
 }
 

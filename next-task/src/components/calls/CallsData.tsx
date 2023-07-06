@@ -26,7 +26,7 @@ import { ICallFilter } from '@/types/global';
 import Button from '../button/Button';
 
 const Text = Typography;
-const { modalBody, button, headerContainer, rowContainer } = styles;
+const { modalBody, button, headerContainer, rowContainer, rowKey } = styles;
 
 function CallsData() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -89,7 +89,7 @@ function CallsData() {
     () =>
       !!selectedCall && (
         <Modal open={!!selectedCall} onClose={() => setSelectedCall(undefined)}>
-          <CallModalBody {...selectedCall} />
+          <CallModalBody {...selectedCall} onClose={setSelectedCall} />
         </Modal>
       ),
     [selectedCall]
@@ -124,7 +124,11 @@ function CallsData() {
 
 export default CallsData;
 
-const CallModalBody = ({ id, ...callData }: ICall) => {
+const CallModalBody = ({
+  id,
+  onClose,
+  ...callData
+}: ICall & { onClose: (undefined: undefined) => void }) => {
   const { mutate: addNote, isLoading } = useAddNote();
   const [note, setNote] = useState(
     callData.notes.reduce((acc, item) => (acc += item.content), '')
@@ -137,16 +141,21 @@ const CallModalBody = ({ id, ...callData }: ICall) => {
   return (
     <Box sx={modalBody}>
       <Box sx={headerContainer}>
-        <Text variant='h6'>Add Note</Text>
         <Box>
-          <CloseIcon />
+          <Text variant='h6'>Add Note</Text>
+          <Text>Call Id {id}</Text>
+        </Box>
+        <Box>
+          <CloseIcon onClick={() => onClose(undefined)} />
         </Box>
       </Box>
       <Divider />
-      <Box>
+      <Box sx={{ marginY: 2 }}>
         <Box sx={rowContainer}>
           <Box sx={{ minWidth: '20%' }}>
-            <Text variant='h6'>Call Type</Text>
+            <Text sx={rowKey} variant='h6'>
+              Call Type
+            </Text>
           </Box>
           <Box>
             <Text>{callData.callType}</Text>
@@ -154,7 +163,9 @@ const CallModalBody = ({ id, ...callData }: ICall) => {
         </Box>
         <Box sx={rowContainer}>
           <Box sx={{ minWidth: '20%' }}>
-            <Text variant='h6'>Duration</Text>
+            <Text sx={rowKey} variant='h6'>
+              Duration
+            </Text>
           </Box>
           <Box>
             <Text>{secondsToMinutes(callData.duration)}</Text>
@@ -162,7 +173,9 @@ const CallModalBody = ({ id, ...callData }: ICall) => {
         </Box>
         <Box sx={rowContainer}>
           <Box sx={{ minWidth: '20%' }}>
-            <Text variant='h6'>From</Text>
+            <Text sx={rowKey} variant='h6'>
+              From
+            </Text>
           </Box>
           <Box>
             <Text>{callData.from}</Text>
@@ -170,7 +183,9 @@ const CallModalBody = ({ id, ...callData }: ICall) => {
         </Box>
         <Box sx={rowContainer}>
           <Box sx={{ minWidth: '20%' }}>
-            <Text variant='h6'>To</Text>
+            <Text sx={rowKey} variant='h6'>
+              To
+            </Text>
           </Box>
           <Box>
             <Text>{callData.to}</Text>
@@ -178,7 +193,9 @@ const CallModalBody = ({ id, ...callData }: ICall) => {
         </Box>
         <Box sx={rowContainer}>
           <Box sx={{ minWidth: '20%' }}>
-            <Text variant='h6'>Via</Text>
+            <Text sx={rowKey} variant='h6'>
+              Via
+            </Text>
           </Box>
           <Box>
             <Text>{callData.via}</Text>
