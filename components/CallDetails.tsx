@@ -74,6 +74,10 @@ export default function BasicModal({
               <Box> Via: </Box>
               {row?.via}
             </Box>
+            <Box sx={{ display: "flex", gap: 9 }}>
+              <Box> Status: </Box>
+              {row?.is_archived as string}
+            </Box>
           </Typography>
         </Box>
       </Modal>
