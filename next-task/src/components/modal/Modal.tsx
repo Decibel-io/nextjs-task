@@ -1,13 +1,20 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { Modal as MuiModal, Box, ModalProps } from '@mui/material';
 
-interface IModal extends ModalProps {}
+interface IModal extends ModalProps {
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
+}
 
-function Modal({ children, ...rest }: IModal) {
+function Modal({ children, header, footer, ...rest }: IModal) {
   return (
     <Box>
       <MuiModal {...rest} sx={{}}>
-        <Box>{children}</Box>
+        <Box>
+          <Box>{header}</Box>
+          <Box>{children}</Box>
+          <Box>{footer}</Box>
+        </Box>
       </MuiModal>
     </Box>
   );

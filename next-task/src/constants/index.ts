@@ -26,3 +26,12 @@ export const API_KEYS = {
   ARCHIVE_CALL: 'archive call',
   ADD_NOTE: 'Add note',
 };
+
+export const CALLS_FILTERS = [
+  { id: 1, value: 'All', label: 'All' },
+  { id: 2, label: 'Archived', value: 'Archived' },
+  { id: 3, label: 'Unarchived', value: 'Unarchived' },
+  { id: 4, label: 'Missed', value: 'missed' },
+  { id: 5, label: 'Voicemail', value: 'voicemail' },
+  { id: 6, label: 'Answered', value: 'answered' },
+];

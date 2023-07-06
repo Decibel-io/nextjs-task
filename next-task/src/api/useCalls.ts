@@ -9,5 +9,6 @@ export function useCalls(offset = 10, limit = 10) {
   return useQuery({
     queryKey: [API_KEYS.GET_CALLS, offset, limit],
     queryFn: () => Api.get<ICallResponse>(`/calls`, { offset, limit }),
+    staleTime: 0,
   });
 }

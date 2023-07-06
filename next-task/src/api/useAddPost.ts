@@ -5,7 +5,7 @@ import { useApi } from './Api';
 
 const { ADD_NOTE, GET_CALLS } = API_KEYS;
 
-export const useAddPost = () => {
+export const useAddNote = () => {
   const Api = useApi();
   const myClient = client();
 
@@ -13,6 +13,6 @@ export const useAddPost = () => {
     mutationKey: ADD_NOTE,
     mutationFn: ({ id, content }: { id: string; content: string }) =>
       Api.post(`/calls/${id}/note`, { content }),
-    onSettled: () => myClient.invalidateQueries(GET_CALLS),
+    onSettled: () => myClient.invalidateQueries([GET_CALLS]),
   });
 };

@@ -7,3 +7,11 @@ export interface IStyles {
 }
 
 export type ILocalStorageKeys = 'AUTH_TOKEN' | 'REFRESH_TOKEN';
+
+export type ICallFilter =
+  | 'All'
+  | 'Archived'
+  | 'Unarchived'
+  | 'voicemail'
+  | 'missed'
+  | 'answered';

@@ -1,3 +1,4 @@
+import { SEA_GREEN } from '@/styles/colors';
 import { IStyles, Style } from '@/types/global';
 
 export const styles = {
@@ -10,10 +11,10 @@ export const styles = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '50%',
+    width: '30%',
     backgroundColor: 'white',
     boxShadow: 24,
-    p: 4,
+    p: 0,
     overflow: 'auto',
     borderRadius: '5px',
   },
@@ -22,6 +23,13 @@ export const styles = {
     color: 'white',
     '&:hover': { backgroundColor: 'black' },
   },
+  headerContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    p: 2,
+  },
+  rowContainer: { display: 'flex', gap: 3, alignItems: 'center', px: 2 },
 } satisfies IStyles;
 
 export const getArchiveStyles = (isArchive: boolean): Style => {
@@ -33,5 +41,16 @@ export const getArchiveStyles = (isArchive: boolean): Style => {
     '&:hover': {
       backgroundColor: isArchive ? 'green' : 'gray',
     },
+  };
+};
+
+export const getCallTypeStyles = (callType: string): Style => {
+  return {
+    color:
+      callType === 'missed'
+        ? 'red'
+        : callType === 'voicemail'
+        ? 'blue'
+        : SEA_GREEN,
   };
 };

@@ -1,6 +1,12 @@
+import { ICall, ICallResponse } from '@/types/api';
+import { ICallFilter } from '@/types/global';
 import tinycolor from 'tinycolor2';
 
 export const isClient = () => typeof window !== 'undefined';
+
+export const alertAnError = (error: unknown) => {
+  if (isClient()) alert(JSON.stringify(error));
+};
 
 export function darkenColor(hexColor: string, percent = 50): string {
   const color = tinycolor(hexColor);
@@ -8,7 +14,7 @@ export function darkenColor(hexColor: string, percent = 50): string {
   return darkerColor.toHexString();
 }
 
-export const getMilliseconds = (time = 9) => time * 60000;
+export const getMilliseconds = (time = 7) => time * 60000;
 
 export const secondsToMinutes = (seconds: number) => {
   const minutes = Math.floor(seconds / 60);
@@ -35,6 +41,22 @@ export const formatDate = (dateString: string) => {
 
   return date.toLocaleDateString('en-US', options);
 };
+
+export const getFilteredCalls = (
+  data: ICallResponse | undefined | null,
+  filter: ICallFilter
+) =>
+  filter === 'All'
+    ? data?.nodes
+    : filter === 'Archived'
+    ? data?.nodes.filter((item) => !!item.isArchived)
+    : filter === 'missed'
+    ? data?.nodes?.filter((item) => item.callType === 'missed')
+    : filter === 'voicemail'
+    ? data?.nodes?.filter((item) => item.callType === 'voicemail')
+    : filter === 'answered'
+    ? data?.nodes?.filter((item) => item.callType === 'answered')
+    : data?.nodes.filter((item) => !item.isArchived);
 
 export const getObjectKeys = <T extends {}>(obj: T) =>
   Object.keys(obj) as (keyof T)[];

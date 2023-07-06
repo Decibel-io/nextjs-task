@@ -8,16 +8,14 @@ import '@fontsource/roboto/700.css';
 import AuthProvider from '@/context/auth/AuthProvider';
 import ApiProvider from '@/context/api/ApiProvider';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { item: token } = useLocalStorage('AUTH_TOKEN');
   return (
     <QueryClientProvider client={queryClient}>
-      <ApiProvider initialToken={token ? token : ''}>
+      <ApiProvider>
         <AuthProvider>
           <Component {...pageProps} />
           <ReactQueryDevtools />

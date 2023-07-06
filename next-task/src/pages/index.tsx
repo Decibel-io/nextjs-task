@@ -1,4 +1,5 @@
 import CallsData from '@/components/calls/CallsData';
+import Header from '@/components/header/Header';
 
 import Head from 'next/head';
 
@@ -11,6 +12,7 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
       </Head>
       <main>
+        <Header />
         <CallsData />
       </main>
     </>
