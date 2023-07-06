@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Call } from "../interfaces/call";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
   position: "absolute" as "absolute",
@@ -40,11 +41,17 @@ export default function BasicModal({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <Box sx={{ mb: 3, display: "flex", justifyContent: "space-between" }}>
+            <Typography id="modal-modal-title" variant="h5" component="h1">
+              Call Details
+            </Typography>
+            <CloseIcon sx={{ cursor: "pointer" }} onClick={onClose} />
+          </Box>
+          <hr />
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <Box sx={{ display: "flex", gap: 9 }}>
               <Box> Call ID:</Box> {row?.id}
             </Box>
-            <hr />
             <Box sx={{ display: "flex", gap: 6 }}>
               <Box> Call Type:</Box> {row?.call_type}
             </Box>
