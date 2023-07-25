@@ -4,10 +4,11 @@ import { ColumnsType, Call } from '@app/types'
 import { TablePaginationConfig } from 'antd'
 import { PhysicalCardOrder } from '../CallDetails'
 import { API } from 'libs/apis'
-import {E164Number} from 'libphonenumber-js'
+import { E164Number } from 'libphonenumber-js'
 import Input from 'react-phone-number-input/input'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import PhoneInput from 'react-phone-number-input'
 
 export const ControlTable: React.FC = () => {
   const { user } = useSelector((state: IStore) => state)
@@ -100,21 +101,20 @@ export const ControlTable: React.FC = () => {
     return formattedDate
   }
 
-   //to get any phone number displayed in E.164 format
+  //to get any phone number displayed in E.164 format
   const formatToE164 = (phoneNumber: string) => {
-    let disableinput: boolean = true
     if (!phoneNumber.startsWith('+')) {
-      disableinput = false
+      return (
+        <Input
+          value={phoneNumber}
+          onChange={(newPhoneNumber: E164Number) => {
+            setValue
+          }}
+        />
+      )
+    } else {
+      return  phoneNumber 
     }
-    return (
-      <Input
-        value={phoneNumber}
-        style={{ width: '120px' }}
-        countrySelectProps={{ disabled: true }}
-        inputProps={{ disabled: disableinput }}
-        onChange={(newPhoneNumber: E164Number) => {setValue}}
-      />
-    )
   }
 
   const columnsdata: ColumnsType = [
@@ -208,7 +208,6 @@ export const ControlTable: React.FC = () => {
       setTotalCount(response.data.totalCount)
       setCalls(response.data.nodes)
       setfilteredCalls(response.data.nodes)
-      console.log(response.data.nodes)
     }
   }
 
