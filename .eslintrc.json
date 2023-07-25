@@ -1,0 +1,46 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "env": { "es6": true },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  },
+  "extends": ["plugin:@typescript-eslint/recommended", "plugin:react/recommended", "plugin:@next/next/recommended"],
+  "plugins": ["simple-import-sort", "import", "@typescript-eslint", "react", "unused-imports"],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "globals": { "React": "writable" },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "react/self-closing-comp": ["error", { "component": true, "html": true }],
+        "indent": ["error", 2, { "SwitchCase": 1 }],
+        "quotes": ["error", "single"],
+        "semi": ["error", "never"],
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        "import/first": "error",
+        "import/newline-after-import": "warn",
+        "import/no-duplicates": "error",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "no-console": "error",
+        "react/no-unescaped-entities": "off",
+        "ban-ts-ignore": "off",
+        "react/prop-types": "off",
+        "react/display-name": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "no-case-declarations": "off",
+        "unused-imports/no-unused-imports": "error",
+        "@typescript-eslint/no-explicit-any": "off",
+        "react-hooks/exhaustive-deps": "off",
+        "@typescript-eslint/no-unused-vars": "error"
+      }
+    }
+  ]
+}
