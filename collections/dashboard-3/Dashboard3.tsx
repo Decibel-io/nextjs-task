@@ -14,7 +14,7 @@ export const Dashboard3 = () => {
       <Col span={22} >
         <Title>Turing Technologies</Title>
       </Col>
-      <Col span={24}>
+      <Col span={22}>
         <ControlTable/>
       </Col>
     </StyledRow>

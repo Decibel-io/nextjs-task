@@ -4,14 +4,14 @@ import { useSelector } from 'react-redux'
 import { ETheme } from './enums'
 
 export const BASE_COLORS = {
-  error: '#D8382B',
+  error: '#CA8A9A',
   primary: '#4C41F5',
   secondary: '#FFFFFF',
-  white: '#fff',
+  white: '#fefefe',
   background: '#E7E7E7',
   grey1: '#00000072',
-  grey2: '#E0E6EE',
-  grey3: '#f6f6f6',
+  grey2: '#3777E6',
+  grey3: '#C2C2C2',
 }
 
 const DARK_MODE_COLORS = {

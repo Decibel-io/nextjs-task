@@ -4,11 +4,12 @@ import { ColumnsType, Call } from '@app/types'
 import { TablePaginationConfig } from 'antd'
 import { PhysicalCardOrder } from '../CallDetails'
 import { API } from 'libs/apis'
-import { E164Number } from 'libphonenumber-js'
+import { parsePhoneNumberFromString } from 'libphonenumber-js'
 import Input from 'react-phone-number-input/input'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import PhoneInput from 'react-phone-number-input'
+import { BASE_COLORS } from '@app/theme'
 
 export const ControlTable: React.FC = () => {
   const { user } = useSelector((state: IStore) => state)
@@ -96,24 +97,22 @@ export const ControlTable: React.FC = () => {
     }
   }
 
-  const formatDate = (Date: string): string => {
-    const formattedDate = Date.slice(0, 10)
-    return formattedDate
-  }
 
-  //to get any phone number displayed in E.164 format
-  const formatToE164 = (phoneNumber: string) => {
+  //to display phone number displayed in E.164 format
+  const formatPhoneNumber = (phoneNumber: string) => {
+    const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber)
+    const number = parsedPhoneNumber.formatInternational()
     if (!phoneNumber.startsWith('+')) {
       return (
         <Input
           value={phoneNumber}
-          onChange={(newPhoneNumber: E164Number) => {
-            setValue
+          onChange={(newPhoneNumber) => {
+            phoneNumber = newPhoneNumber
           }}
         />
       )
     } else {
-      return  phoneNumber 
+      return number
     }
   }
 
@@ -123,20 +122,24 @@ export const ControlTable: React.FC = () => {
       title: 'Call Type',
       render: (_: Call, record: Call) => {
         let callType: string = ''
+        let tagColor: string = ''
 
         switch (record.call_type) {
           case 'voicemail':
             callType = 'Voicemail'
+            tagColor = BASE_COLORS.grey3
             break
           case 'answered':
             callType = 'Answered'
+            tagColor = BASE_COLORS.grey2
             break
           case 'missed':
             callType = 'Missed'
+            tagColor = BASE_COLORS.error
             break
         }
 
-        return <Tag>{callType}</Tag>
+        return <Tag color={tagColor}>{callType}</Tag>
       },
     },
     {
@@ -144,7 +147,7 @@ export const ControlTable: React.FC = () => {
       title: 'Direction',
       render: (_: Call, record: Call) => {
         const direction = record.direction === 'inbound' ? 'Inbound' : 'Outbound'
-        return <Tag>{direction}</Tag>
+        return <Tag color={BASE_COLORS.grey1}>{direction}</Tag>
       },
     },
     {
@@ -161,18 +164,20 @@ export const ControlTable: React.FC = () => {
     {
       dataIndex: 'from',
       title: 'From',
-      render: (from: string) => formatToE164(from),
+      render: (from: string) => formatPhoneNumber(from),
     },
     {
       dataIndex: 'to',
       title: 'To',
-      render: (to: string) => formatToE164(to),
+      render: (to: string) => formatPhoneNumber(to),
     },
-    { dataIndex: 'via', title: 'Via', render: (via: string) => formatToE164(via) },
+    { dataIndex: 'via', title: 'Via', render: (via: string) => formatPhoneNumber(via) },
     {
       dataIndex: 'created_at',
       title: 'Created At',
-      render: (created_at: string) => formatDate(created_at),
+      render: (created_at: string) => {
+        return created_at.slice(0, 10)
+      },
     },
     {
       dataIndex: 'status',
@@ -242,8 +247,8 @@ export const ControlTable: React.FC = () => {
   }
 
   return (
-    <Row justify="center">
-      <Col span={22}>
+    <Row>
+      <Col span={24}>
         <Select value={filter} onChange={(value: string) => handleFilterChange(value)}>
           {options.map((option) => (
             <Option key={option.value} value={option.value}>
@@ -252,7 +257,7 @@ export const ControlTable: React.FC = () => {
           ))}
         </Select>
       </Col>
-      <Col span={22}>
+      <Col span={24}>
         <Table columns={columnsdata} dataSource={filteredcalls} scroll={{ x: true }} pagination={paginationConfig} />
         <Modal title="Call" visible={isModalOpen} onCancel={handleOnCloseModal} footer={false}>
           {selectedRecord && <PhysicalCardOrder call={selectedRecord} accessToken={accessToken} />}
