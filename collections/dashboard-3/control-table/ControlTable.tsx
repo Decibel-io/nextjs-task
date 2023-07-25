@@ -35,7 +35,9 @@ export const ControlTable: React.FC = () => {
     setIsModalOpen(false)
   }
 
+  //fetch calls for new offset and limit on page change
   const handlePaginationChange = (newPage: number) => {
+    if (newPage === page) return;
     setPage(newPage)
     setLoading(true)
     const offset: number = (newPage - 1) * rowsPerPage
@@ -100,10 +102,11 @@ export const ControlTable: React.FC = () => {
 
   //to display phone number displayed in E.164 format
   const formatPhoneNumber = (phoneNumber: string) => {
-    const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber)
-    const number = parsedPhoneNumber.formatInternational()
-    if (!phoneNumber.startsWith('+')) {
-      return (
+    const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber);
+    const number = parsedPhoneNumber?.formatInternational();
+  
+    return !phoneNumber.startsWith('+')
+      ? (
         <Input
           value={phoneNumber}
           onChange={(newPhoneNumber) => {
@@ -111,11 +114,9 @@ export const ControlTable: React.FC = () => {
           }}
         />
       )
-    } else {
-      return number
-    }
-  }
-
+      : number;
+  };
+  //table column
   const columnsdata: ColumnsType = [
     {
       dataIndex: 'call_type',
@@ -200,6 +201,7 @@ export const ControlTable: React.FC = () => {
   ]
 
   useEffect(() => {
+    //for the loading the initial page
     const offset: number = (page - 1) * rowsPerPage
     const limit: number = (page - 1) * rowsPerPage + rowsPerPage
     fetchData(offset, limit)
