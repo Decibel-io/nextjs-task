@@ -1,13 +1,11 @@
-import { Col, Row, Table, CheckableTag, Modal, Notification, Select, Option, Tag , Image} from '@app/components'
+import { Col, Row, Table, CheckableTag, Modal, Notification, Select, Option, Tag, Image } from '@app/components'
 import { IStore } from '@app/redux'
 import { ColumnsType, Call } from '@app/types'
 import { TablePaginationConfig } from 'antd'
 import { PhysicalCardOrder } from '../CallDetails'
 import { API } from 'libs/apis'
-import { NextRouter, useRouter } from 'next/router'
-import { parsePhoneNumberFromString, PhoneNumber, format, AsYouType, CountryCode } from 'libphonenumber-js'
-import { formatPhoneNumber } from 'react-phone-number-input'
-import PhoneInput from 'react-phone-number-input'
+import {E164Number} from 'libphonenumber-js'
+import Input from 'react-phone-number-input/input'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -102,8 +100,21 @@ export const ControlTable: React.FC = () => {
     return formattedDate
   }
 
+   //to get any phone number displayed in E.164 format
   const formatToE164 = (phoneNumber: string) => {
-    return phoneNumber
+    let disableinput: boolean = true
+    if (!phoneNumber.startsWith('+')) {
+      disableinput = false
+    }
+    return (
+      <Input
+        value={phoneNumber}
+        style={{ width: '120px' }}
+        countrySelectProps={{ disabled: true }}
+        inputProps={{ disabled: disableinput }}
+        onChange={(newPhoneNumber: E164Number) => {setValue}}
+      />
+    )
   }
 
   const columnsdata: ColumnsType = [
@@ -150,10 +161,12 @@ export const ControlTable: React.FC = () => {
     {
       dataIndex: 'from',
       title: 'From',
+      render: (from: string) => formatToE164(from),
     },
     {
       dataIndex: 'to',
       title: 'To',
+      render: (to: string) => formatToE164(to),
     },
     { dataIndex: 'via', title: 'Via', render: (via: string) => formatToE164(via) },
     {
