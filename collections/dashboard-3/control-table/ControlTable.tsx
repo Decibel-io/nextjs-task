@@ -1,4 +1,4 @@
-import { Col, Row, Table, CheckableTag, Modal, Notification, Select, Option, Tag, Image } from '@app/components'
+import { Col, Row, Table, CheckableTag, Modal, Notification, Select, Option, Tag, Image, Badge } from '@app/components'
 import { IStore } from '@app/redux'
 import { ColumnsType, Call } from '@app/types'
 import { TablePaginationConfig } from 'antd'
@@ -100,10 +100,11 @@ export const ControlTable: React.FC = () => {
   }
 
 
-  //to display phone number displayed in E.164 format
+  //to display any phone number in E.164 format
   const formatPhoneNumber = (phoneNumber: string) => {
     const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber);
-    const number = parsedPhoneNumber?.formatInternational();
+    const number = parsedPhoneNumber?.formatInternational();//visually looks better
+    //const number2 = parsedPhoneNumber?.format('E.164'); //this also works but without spacing
   
     return !phoneNumber.startsWith('+')
       ? (
@@ -128,15 +129,15 @@ export const ControlTable: React.FC = () => {
         switch (record.call_type) {
           case 'voicemail':
             callType = 'Voicemail'
-            tagColor = BASE_COLORS.grey3
+            tagColor = 'geekblue'
             break
           case 'answered':
             callType = 'Answered'
-            tagColor = BASE_COLORS.grey2
+            tagColor = 'cyan'
             break
           case 'missed':
             callType = 'Missed'
-            tagColor = BASE_COLORS.error
+            tagColor = 'red'
             break
         }
 
@@ -148,7 +149,7 @@ export const ControlTable: React.FC = () => {
       title: 'Direction',
       render: (_: Call, record: Call) => {
         const direction = record.direction === 'inbound' ? 'Inbound' : 'Outbound'
-        return <Tag color={BASE_COLORS.grey1}>{direction}</Tag>
+        return <Tag color='blue'>{direction}</Tag>
       },
     },
     {
