@@ -1,9 +1,7 @@
-import { DownOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
-import { Button, Cascader, Col, Row, Space, Switch, Tag, Tooltip, useForm } from '@app/components'
-import { CONTINENT_CITIES } from '@app/data'
+import {  ExclamationCircleOutlined } from '@ant-design/icons'
+import { Button, Col, Row, Space, Switch, Tag, Tooltip, useForm } from '@app/components'
 import { IStore, toggleTheme } from '@app/redux'
 import { ETheme } from '@app/theme'
-import { Option } from '@app/types'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -17,11 +15,7 @@ export const NavBar = () => {
   const { color, theme } = useSelector((state: IStore) => state)
   const dispatch = useDispatch()
   const [changeThemeDrawerVisible, setChangeThemeDrawerVisible] = useState(false)
-  const [selectedCity, setSelectedCity] = useState('Select City')
 
-  const onChangeCity = (_: string[], selectedOptions: Option[]) => {
-    setSelectedCity(selectedOptions.map((o) => o.label).join(', '))
-  }
 
   const toggleThemeDrawer = () => {
     setChangeThemeDrawerVisible(!changeThemeDrawerVisible)

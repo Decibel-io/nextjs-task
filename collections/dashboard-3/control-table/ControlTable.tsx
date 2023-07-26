@@ -89,12 +89,14 @@ export const ControlTable: React.FC = () => {
         Notification({
           message: 'Call archived!',
           type: 'success',
+          duration: 1,
         })
         break
       default:
         Notification({
           message: 'Call unarchived!',
           type: 'success',
+          duration: 1,
         })
     }
   }

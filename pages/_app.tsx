@@ -1,12 +1,11 @@
 import 'antd/dist/reset.css'
 
-import { App, Content, Icon, If, Layout, Menu, Sider } from '@app/components'
+import { App, Content, If, Layout} from '@app/components'
 import { ROUTE } from '@app/data'
 import { IStore, logout, persistor, store } from '@app/redux'
 import { GlobalStyles } from '@app/styles'
 import { getThemeColors, THEME } from '@app/theme'
 import { ConfigProvider } from 'antd'
-import { StyledBanner } from 'libs/components/layout/elements'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { AppFonts } from 'public'
@@ -15,7 +14,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { ThemeProvider } from 'styled-components'
 
-import { NavBar, SIDEBAR_MENU_ITEMS } from '~collections'
+import { NavBar } from '~collections'
 // NOTE: Do not write code in this component unless required (use "Main" instead)
 export default function Root(props: AppProps) {
   return (
@@ -65,8 +64,6 @@ function Main({ Component, pageProps }: AppProps) {
     return [ROUTE.AUTH.SIGN_IN].includes(route)
   }
 
-  /* It's setting the background color of the sidebar to a dark color if the theme is dark. */
-  const backgroundColor = { background: COLORS.secondary }
 
   return (
     <ConfigProvider theme={THEME(theme.value, theme.dynamicTheme.isCompact)}>

@@ -1,9 +1,9 @@
 import { Col, Spacer, useForm, Notification } from '@app/components'
 import { SIGN_IN_FORM } from '@app/forms'
 import { DynamicForm } from '@app/modules'
-import { login, refresh } from '@app/redux'
+import { IStore, login, refresh } from '@app/redux'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { API } from 'libs/apis'
 
 import { CompanyLogo } from '~public'
@@ -11,7 +11,6 @@ import { CompanyLogo } from '~public'
 import {
   StyledContainer,
   StyledFieldsCol,
-  StyledLeftCol,
   StyledRow,
   StyledTitle,
 } from './elements'
@@ -21,10 +20,15 @@ export const SignIn: React.FC = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const timeOut = parseInt(process.env.TIME_OUT || '0')
+  const { user } = useSelector((state: IStore) => state)
 
   const [form] = useForm()
 
   const refreshToken = async (token?: string) => {
+    if(!token)
+    {
+      token=user.accessToken
+    }
     const response = await API.AUTH.REFRESH_TOKEN(token)
     dispatch(
       refresh({
@@ -58,6 +62,7 @@ export const SignIn: React.FC = () => {
           Notification({
             message: 'Logging in!',
             type: 'success',
+            duration: 2,
           })
           startRefreshTokenInterval(response)
 

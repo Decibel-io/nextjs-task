@@ -23,6 +23,7 @@ export const PhysicalCardOrder = ({ call, accessToken }) => {
     Notification({
       message: 'Note Saved!',
       type: 'success',
+      duration: 2,
     })
   }
 
